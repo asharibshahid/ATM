@@ -1,6 +1,6 @@
 import inquirer from "inquirer";
 let myBalance = 10000;
-let myPin = 661;
+const myPin = 661;
 let pinAnswer = await inquirer.prompt([{
         name: "pin",
         type: "number",
@@ -10,28 +10,56 @@ let pinAnswer = await inquirer.prompt([{
 if (pinAnswer.pin === myPin) {
     console.log("your pincode is correct");
 }
-;
-let operationAns = await inquirer.prompt([{
+else {
+    console.log("your pin is incorrect");
+}
+let now = await inquirer.prompt([
+    {
+        name: "new",
+        type: "list",
+        message: "choosee your account",
+        choices: [
+            "current account",
+            "Saving account"
+        ]
+    },
+    {
         name: "operation",
         type: "list",
         message: "SELECT A ONE OPTION",
-        choices: ["withdraw", "CHECK BALANCE"]
-    }]);
-if (operationAns.operation === "withdraw") {
+        choices: ["withdraw", "Fast Cash"]
+    }
+]);
+if (now.operation === "withdraw") {
     let amountAns = await inquirer.prompt([{
-            name: "amount",
+            name: "withdraw",
             type: "number",
             message: "ENTER THE AMOUNT"
         }]);
-    myBalance -= amountAns.amount;
-    console.log("your remaining balance is " + myBalance);
-}
-else if (operationAns.operation === "CHECK BALANCE") {
-    console.log(`"your balance is ${myBalance}" `);
-}
-else if (10000 < operationAns.operation) {
-    console.log("infucient balance ");
+    if (myBalance >= amountAns.withdraw) {
+        myBalance -= amountAns.withdraw;
+        console.log("your remaining balance is " + myBalance);
+    }
+    else
+        (console.log("insuficient balance"));
 }
 else {
-    console.log("your pin is incorrect");
+    let Fastcash = await inquirer.prompt([
+        {
+            name: "FastAmount",
+            type: "list",
+            message: "Select the amount you want to withdraw",
+            choices: [
+                "1000",
+                "3000",
+                "5000"
+            ]
+        }
+    ]);
+    if (myBalance >= Fastcash.FastAmount) {
+        myBalance -= Fastcash.FastAmount;
+        console.log("Your remaining balance is " + myBalance);
+    }
+    else
+        (console.log("insuficient balance"));
 }

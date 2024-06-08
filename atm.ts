@@ -1,8 +1,8 @@
-import inquirer from "inquirer"
+ import inquirer from "inquirer"
 
 
 let myBalance = 10000;
-let myPin = 661;
+const myPin = 661;
 
 
 
@@ -19,40 +19,78 @@ message:"ENTER YOUR PINCODE"
 if (pinAnswer.pin === myPin){
     console.log("your pincode is correct")
    
-};
+}
+else{
+    console.log("your pin is incorrect")
+ }
 
+  let now = await inquirer.prompt
+ ([
+    {
+      name: "new",
+      type: "list",
+      message:"choosee your account",
+      choices : [
+        "current account",
+        "Saving account"
 
-
-let operationAns= await inquirer.prompt([{
-
+      ]
+    },
+ {
     name:"operation",
     type:"list",
     message:"SELECT A ONE OPTION",
-    choices: ["withdraw" ,  "CHECK BALANCE"]
-    
-    }]) 
+    choices: ["withdraw" ,  "Fast Cash"]
+ }
+
+ ]) 
+ 
    
-if (operationAns.operation === "withdraw"){
+ 
+   
+ if (now.operation === "withdraw"){
     let amountAns= await inquirer.prompt([{
-name:"amount",
-type:"number",
-message:"ENTER THE AMOUNT"
-
+ name:"withdraw",
+ type:"number",
+ message:"ENTER THE AMOUNT"
+    
     }])
-    myBalance -= amountAns.amount;
-    console.log("your remaining balance is " + myBalance)
-}
-else if(operationAns.operation === "CHECK BALANCE"){
-    console.log(`"your balance is ${myBalance}" `)
-}
+
+ if (myBalance >= amountAns.withdraw){
+    myBalance -= amountAns.withdraw
+    console.log("your remaining balance is "+ myBalance)
+ }
+ else(
+    console.log("insuficient balance")
+ )
+ }
+
+ else {
+    let Fastcash = await inquirer.prompt([
+ {
+ name:"FastAmount",
+ type: "list",
+ message: "Select the amount you want to withdraw",
+ choices: [
+ "1000",
+ "3000",
+ "5000"
+         ]
+ }
+    ])
+  if (myBalance >= Fastcash.FastAmount){
+ myBalance -= Fastcash.FastAmount
+ console.log("Your remaining balance is " + myBalance);
+ }
+ else(
+    console.log("insuficient balance")
+    
+ )
 
 
-else{
-    console.log("your pin is incorrect")
-}
+  }
 
-
-
+  
 
 
 
